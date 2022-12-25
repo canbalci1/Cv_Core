@@ -18,7 +18,7 @@ namespace BusinessLayer.Concrete
             _messageDal = messageDal;
         }
 
-        public Message GetById(int id)
+        public Message TGetById(int id)
         {
             throw new NotImplementedException();
         }
