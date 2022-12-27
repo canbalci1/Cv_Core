@@ -1,15 +1,17 @@
 ﻿@model EntityLayer.Concrete.Portfolio
+
 @{
-    ViewData["Title"] = "AddPortfolio";
+    ViewData["Title"] = "EditPortfolio";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
 <div class="card-header border-0">
-    <h3 class="mb-0">Proje Ekleme Sayfası</h3>
+    <h3 class="mb-0">Proje Düzenleme Sayfası</h3>
 </div>
 <br />
-@using (Html.BeginForm("AddPortfolio", "Portfolio", FormMethod.Post))
+@using (Html.BeginForm("EditPortfolio", "Portfolio", FormMethod.Post))
 {
+    @Html.HiddenFor(x=>x.PortfolioID)
     @Html.Label("Proje Başlığı")
     @Html.TextBoxFor(x=> x.Name,new {@class="form-control"})
     @Html.ValidationMessageFor(x=>x.Name, "",new{@class="text-danger"})
@@ -26,17 +28,18 @@
     @Html.TextBoxFor(x=> x.ProjectUrl,new {@class="form-control"})
     @Html.ValidationMessageFor(x=>x.ProjectUrl, "",new{@class="text-danger"})
     <br />
-            <br />
     <label>Fiyat</label>
     @Html.TextBoxFor(x=> x.Price,new {@class="form-control"})
     @Html.ValidationMessageFor(x=>x.Price, "",new{@class="text-danger"})
-        <br />
-                <br />
+    <br />
     <label>Tamamlanma Oranı</label>
     @Html.TextBoxFor(x=> x.Value,new {@class="form-control"})
     @Html.ValidationMessageFor(x=>x.Value, "",new{@class="text-danger"})
-        <br />
-    <button class="btn btn-success">Kaydet</button>
+    <br />
+    <label>Platform Url</label>
+    @Html.TextBoxFor(x=> x.Platform,new {@class="form-control"})
+    @Html.ValidationMessageFor(x=>x.Value, "",new{@class="text-danger"})
+    <br />
+    <button class="btn btn-success">Güncelle</button>
 }
-
 

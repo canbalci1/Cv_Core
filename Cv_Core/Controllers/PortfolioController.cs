@@ -1,6 +1,8 @@
 ﻿using BusinessLayer.Concrete;
+using BusinessLayer.ValidationRules;
 using DataAccessLayer.EntityFramework;
 using EntityLayer.Concrete;
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cv_Core.Controllers
@@ -30,8 +32,21 @@ namespace Cv_Core.Controllers
             ViewBag.v1 = "Ekleme";
             ViewBag.v2 = "Projeler";
             ViewBag.v3 = "Projeler Ekleme";
-            portfolioManager.TAdd(portfolio);
-            return RedirectToAction("Index");
+            PortfolioValidator validations = new PortfolioValidator();
+            ValidationResult results= validations.Validate(portfolio);
+            if (results.IsValid)
+            {
+                portfolioManager.TAdd(portfolio);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
+            return View();
         }
         public IActionResult DeletePortfolio(int id)
         {
@@ -51,8 +66,22 @@ namespace Cv_Core.Controllers
         [HttpPost]
         public IActionResult EditPortfolio(Portfolio portfolio)
         {
-            portfolioManager.TUpdate(portfolio);
-            return RedirectToAction("Index");
+            PortfolioValidator validations =new PortfolioValidator();
+            ValidationResult results=validations.Validate(portfolio);
+            if (results.IsValid)
+            {
+                portfolioManager.TUpdate(portfolio);
+                return RedirectToAction("Index");
+
+            }
+            else
+            {
+                foreach (var item in results.Errors)
+                {
+                    ModelState.AddModelError(item.PropertyName, item.ErrorMessage);
+                }
+            }
+            return View();
         }
 
 
